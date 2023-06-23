@@ -1,25 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+import {ChakraProvider} from '@chakra-ui/react'
+import './App.css'
 
-function App() {
+
+// Components
+import LandingPage from './components/LandingPage';
+import RegistrationForm from './components/components_landingpage/RegistrationForm';
+import VerificationPage from './components/VerificationPage';
+import LoginForm from './components/components_landingpage/LoginForm';
+import ChangePasswordForm from './components/ChangePasswordForm';
+import ResetPasswordPage from './components/ResetPasswordPage';
+import ProfileUpdateForm from './components/ProfileUpdateForm';
+import BloggingFeature from './components/BloggingFeature';
+import ArticleDetailPage from './components/ArticleDetailPage';
+
+
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ChakraProvider>
+      <Routes>
+        <Route path="/" element={<LandingPage/>} />
+        <Route path="/register" element={<RegistrationForm/>} />
+        <Route path="/verify" element={<VerificationPage/>} />
+        <Route path="/login" element={<LoginForm/>} />
+        <Route path="/change-password" element={<ChangePasswordForm/>} />
+        <Route path="/reset-password" element={<ResetPasswordPage/>} />
+        <Route path="/profile" element={<ProfileUpdateForm/>} /> 
+        <Route path="/blogging" element={<BloggingFeature/>} />
+        <Route path="/article" element={<ArticleDetailPage/>} />
+
+      </Routes>
+    </ChakraProvider>
   );
 }
 
-export default App;
