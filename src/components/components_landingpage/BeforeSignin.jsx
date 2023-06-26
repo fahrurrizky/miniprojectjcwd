@@ -2,7 +2,7 @@ import {
   Box,
   Flex,
   Text,
-  IconButton,
+  // IconButton,
   Button,
   Stack,
   Icon,
@@ -11,111 +11,100 @@ import {
   PopoverTrigger,
   PopoverContent,
   useColorModeValue,
-  useDisclosure,
-} from '@chakra-ui/react';
+  // useDisclosure,
+} from "@chakra-ui/react";
+// import { PiUserCirclePlusFill } from "react-icons/pi";
+// import { IoMdArrowDropdown } from "react-icons/io";
 
 import {
-  HamburgerIcon,
-  CloseIcon,
+  // HamburgerIcon,
+  // CloseIcon,
   ChevronRightIcon,
-} from '@chakra-ui/icons';
-import logo from './Bee2.png';
-import LoginForm from '../components_landingpage/LoginForm';
-import RegistrationForm from '../components_landingpage/RegistrationForm';
-
+} from "@chakra-ui/icons";
+import logo from "./Bee2.png";
+// import LoginForm from '../components_landingpage/LoginForm';
+// import RegistrationForm from '../components_landingpage/RegistrationForm';
 
 export default function WithSubnavigation() {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const { onToggle } = useDisclosure();
+  // const { isOpen, onOpen, onClose } = useDisclosure();
+  // const { onToggle } = useDisclosure();
+  const login = localStorage.getItem('token')
+
 
   return (
     <Box>
       <Flex
-        getHexValue={'ffd500'}
-        // bg={useColorModeValue('white', 'gray.800')}
-        color={useColorModeValue('ffd500.600', 'white')}
-        minH={'60px'}
-        py={{ base: 2 }}
-        px={{ base: 4 }}
-        // borderBottom={5}
-        borderStyle={'solid'}
-        borderColor={useColorModeValue('black')}
-        align={'center'}
-        position={'fixed'}
-        w={'100%'}
-        zIndex={'20'}
+        // py={'1'}
+        px={"10"}
+        align={"center"}
+        position={"fixed"}
+        w={"100%"}
+        zIndex={"20"}
+        bgColor={"white"}
       >
-        <Flex
-          flex={{ base: 1, md: 'auto' }}
-          ml={{ base: -2 }}
-          display={{ base: 'flex', md: 'none' }}
-        >
-          <IconButton
-            onClick={onToggle}
-            icon={
-              isOpen ? <CloseIcon w={3} h={3} /> : <HamburgerIcon w={5} h={5} />
-            }
-            variant={'ghost'}
-            aria-label={'Toggle Navigation'}
-          />
-        </Flex>
         {/* logo */}
-        <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
-          <img src={logo} alt="Logo" width="20%" />
-          <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
+        <Flex>
+          <a href="/">
+            <img src={logo} alt="Logo" width="250px" />
+          </a>
+          <Flex ml={5} px={"200"}>
             <DesktopNav />
           </Flex>
         </Flex>
 
-        <Stack
-          flex={{ base: 1, md: 0 }}
-          justify={'flex-end'}
-          direction={'row'}
-          spacing={6}
-        >
-          <LoginForm />
-          <Button
-            // as={'a'}
-            display={{ base: 'none', md: 'inline-flex' }}
-            fontSize={'sm'}
-            fontWeight={400}
-            color={'black'}
-            bg={'yellow.400'}
-            fontWeight={'bold'}
-            href={'#'}
-            _hover={{
-              bg: 'yellow.300',
-            }}
-          >
-            <RegistrationForm/>
-          </Button>
-        </Stack>
+        <Flex direction={"row"} ml={"20"}>
+          <Link href="/login" color="teal">
+            <Button
+              variant={""}
+              textColor={"black"}
+              _hover={{ bg: "gray.100" }}
+              fontSize={"sm"}
+              borderRadius={"9"}
+            >
+              Sign In
+            </Button>
+          </Link>
+          <Link href="/register" color="teal">
+            <Button
+              variant={""}
+              textColor={"black"}
+              _hover={{ bg: "gray.100" }}
+              fontSize={"sm"}
+              borderRadius={"9"}
+            >
+              {/* <PiUserCirclePlusFill size={"30"} /> */}
+              Get Started
+            </Button>
+          </Link>
+        </Flex>
       </Flex>
     </Box>
   );
 }
 
 const DesktopNav = () => {
-  const linkColor = useColorModeValue('gray.600', 'gray.200');
-  const linkHoverColor = useColorModeValue('yellow.400', 'white');
-  const popoverContentBgColor = useColorModeValue('white', 'gray.800');
+  // const linkColor = useColorModeValue("gray.600", "gray.200");
+  // const linkHoverColor = useColorModeValue("yellow.400", "white");
+  // const popoverContentBgColor = useColorModeValue("white", "gray.800");
 
   return (
-    <Stack direction={'row'} spacing={4}>
+    <Stack direction={"row"} spacing={3}>
       {NAV_ITEMS.map((navItem) => (
-        <Flex key={navItem.label} alignItems={'center'}>
-          <Popover trigger={'hover'} placement={'bottom-start'}>
+        <Flex
+          key={navItem.label}
+          alignItems={"center"}
+          fontSize={"sm"}
+          alignContent={"center"}
+        >
+          <Popover trigger={"hover"} placement={"bottom-start"}>
             <PopoverTrigger>
               <Link
                 p={1}
-                href={navItem.href ?? '#'}
-                fontSize={'sm'}
+                href={navItem.href ?? "#"}
+                fontSize={"sm"}
                 fontWeight={500}
-                color={linkColor}
-                _hover={{
-                  textDecoration: 'none',
-                  color: linkHoverColor,
-                }}
+                // color={linkColor}
+                color={"black"}
               >
                 {navItem.label}
               </Link>
@@ -124,11 +113,13 @@ const DesktopNav = () => {
             {navItem.children && (
               <PopoverContent
                 border={0}
-                boxShadow={'xl'}
-                bg={popoverContentBgColor}
+                boxShadow={"xl"}
+                // bg={popoverContentBgColor}
                 p={4}
-                rounded={'xl'}
-                minW={'sm'}
+                rounded={"xl"}
+                minW={"sm"}
+                // bg="transparent"
+                // opacity={9}
               >
                 <Stack>
                   {navItem.children.map((child) => (
@@ -148,33 +139,33 @@ const DesktopSubNav = ({ label, href, subLabel }) => {
   return (
     <Link
       href={href}
-      role={'group'}
-      display={'block'}
+      role={"group"}
+      display={"block"}
       p={2}
-      rounded={'md'}
-      _hover={{ bg: useColorModeValue('pink.50', 'gray.900') }}
+      rounded={"md"}
+      _hover={{ bg: "white" }}
     >
-      <Stack direction={'row'} align={'center'}>
+      <Stack direction={"row"} align={"center"}>
         <Box>
           <Text
-            transition={'all .3s ease'}
-            _groupHover={{ color: 'pink.400' }}
+            transition={"all .3s ease"}
+            _groupHover={{ color: "green.400" }}
             fontWeight={500}
           >
             {label}
           </Text>
-          <Text fontSize={'sm'}>{subLabel}</Text>
+          <Text fontSize={"sm"}>{subLabel}</Text>
         </Box>
         <Flex
-          transition={'all .3s ease'}
-          transform={'translateX(-10px)'}
+          transition={"all .3s ease"}
+          transform={"translateX(-10px)"}
           opacity={0}
-          _groupHover={{ opacity: '100%', transform: 'translateX(0)' }}
-          justify={'flex-end'}
-          align={'center'}
+          _groupHover={{ opacity: "100%", transform: "translateX(0)" }}
+          justify={"flex-end"}
+          align={"center"}
           flex={1}
         >
-          <Icon color={'pink.400'} w={5} h={5} as={ChevronRightIcon} />
+          <Icon color={"green.400"} w={5} h={5} as={ChevronRightIcon} />
         </Flex>
       </Stack>
     </Link>
@@ -183,45 +174,65 @@ const DesktopSubNav = ({ label, href, subLabel }) => {
 
 const NAV_ITEMS = [
   {
-    label: 'Inspiration',
+    label: "Category",
     children: [
       {
-        label: 'Explore Design Work',
-        subLabel: 'Trending Design to inspire you',
-        href: '#',
+        label: "Explore Design Work",
+        // subLabel: "Trending Design to inspire you",
+        href: "#",
       },
       {
-        label: 'New & Noteworthy',
-        subLabel: 'Up-and-coming Designers',
-        href: '#',
+        label: "New & Noteworthy",
+        // subLabel: "Up-and-coming Designers",
+        href: "#",
+      },
+      {
+        label: "New & Noteworthy",
+        // subLabel: "Up-and-coming Designers",
+        href: "#",
+      },
+      {
+        label: "New & Noteworthy",
+        // subLabel: "Up-and-coming Designers",
+        href: "#",
+      },
+      {
+        label: "New & Noteworthy",
+        // subLabel: "Up-and-coming Designers",
+        href: "#",
+      },
+      {
+        label: "New & Noteworthy",
+        // subLabel: "Up-and-coming Designers",
+        href: "#",
       },
     ],
   },
   {
-    label: 'Find Work',
+    label: "Find you want",
     children: [
       {
-        label: 'Job Board',
-        subLabel: 'Find your dream design job',
-        href: '#',
+        label: "Job Board",
+        subLabel: "Find your dream design job",
+        href: "#",
       },
       {
-        label: 'Freelance Projects',
-        subLabel: 'An exclusive list for contract work',
-        href: '#',
+        label: "Freelance Projects",
+        subLabel: "An exclusive list for contract work",
+        href: "#",
       },
     ],
   },
   {
-    label: 'Our story',
-    href: '#',
+    label: "Our story",
+    href: "#",
   },
   {
-    label: 'Membership',
-    href: '#',
+    label: "Membership",
+    href: "#",
   },
   {
-    label: 'Write',
-    href: '#',
+    label: "Write",
+    href: "/article",
   },
 ];

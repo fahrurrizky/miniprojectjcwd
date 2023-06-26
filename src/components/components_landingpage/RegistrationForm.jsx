@@ -1,160 +1,256 @@
-import React, { useState } from 'react';
-import logo from '../components_landingpage/Bee1.png';
-import { Link } from 'react-router-dom';
-import LoginForm from '../components_landingpage/LoginForm';
+import React, { useState } from "react";
+// import { Link } from "react-router-dom";
+import { ExternalLinkIcon, ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
+import logo from "./Bee1.png";
 import {
   Box,
-  FormControl,
-  FormLabel,
-  Input,
-  Button,
-  Heading,
   Text,
-
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-} from '@chakra-ui/react';
+  Button,
+  FormControl,
+  FormErrorMessage,
+  FormLabel,
+  Heading,
+  Input,
+  InputGroup,
+  InputRightElement,
+  Stack,
+  Link,
+} from "@chakra-ui/react";
+import { Formik, Field, Form, ErrorMessage } from "formik";
+import * as Yup from "yup";
+import axios from "axios";
 
 const RegistrationForm = () => {
-  const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
+  // Validation schema using Yup
+  const validationSchema = Yup.object().shape({
+    username: Yup.string().required("Username is required"),
+    email: Yup.string().email("Invalid email").required("Email is required"),
+    phone: Yup.string()
+      .test("is-number", "Phone number must be a number", (value) =>
+        /^[0-9]+$/.test(value)
+      )
+      .required("Phone number is required"),
+    password: Yup.string()
+      .min(6, "Password must be at least 6 characters long")
+      .matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/,
+        "Password must contain at least 1 uppercase letter, 1 lowercase letter, 1 number, and 1 special character"
+      )
+      .required("Password is required"),
+    confirmPassword: Yup.string()
+      .oneOf([Yup.ref("password"), null], "Passwords must match")
+      .required("Confirm Password is required"),
   });
-  const [isValid, setIsValid] = useState(true);
-  const [showPassword, setShowPassword] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: value,
-    }));
-  };
+  // Form submission
+  const handleSubmit = async (values, { setSubmitting, setFieldError }) => {
+    try {
+      const response = await axios.post(
+        "https://minpro-blog.purwadhikabootcamp.com/api/auth/",
+        values
+      );
+      console.log(response.data);
+      // Perform registration logic here
 
-  const handleTogglePassword = () => {
-    setShowPassword((prevState) => !prevState);
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const hasMinLength = formData.password.length >= 6;
-    const hasSymbol = /[!@#$%^&*]/.test(formData.password);
-    const hasUppercase = /[A-Z]/.test(formData.password);
-
-    if (hasMinLength && hasSymbol && hasUppercase) {
-      // Password is valid
-      setIsValid(true);
-      console.log(formData);
-      // Perform further actions
-    } else {
-      // Password is invalid
-      setIsValid(false);
+    } catch (error) {
+      console.error(error);
+      // Handle the error and set field errors if necessary
+      if (error.response && error.response.data) {
+        const { data } = error.response;
+        if (data.errors && typeof data.errors === "object") {
+          Object.keys(data.errors).forEach((field) => {
+            setFieldError(field, data.errors[field]);
+          });
+        }
+      }
+    } finally {
+      setSubmitting(false);
     }
   };
 
-  const handleOpenModal = () => {
-    setIsModalOpen(true);
-  };
+  // Password visibility toggle
+  const [showPassword, setShowPassword] = useState(false);
 
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
   };
 
   return (
-    <Box>
-      <Button onClick={handleOpenModal} variant={''}>
-        Get Started
-      </Button>
-      <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
-        <ModalOverlay />
-        <ModalContent height={"750px"} borderRadius={"9"}>
-          <ModalHeader>Create an account</ModalHeader>
-          <ModalBody>
-            <center>
-              <img src={logo} alt="Logo" width="50%" />
-            </center>
-            <Box
-              borderWidth="6px"
-              borderRadius="md"
-              p={3}
-            >
-              <form onSubmit={handleSubmit}>
-                <FormControl id="firstName" mb={3}>
-                  <FormLabel>First name</FormLabel>
-                  <Input
-                    type="text"
-                    name="firstName"
-                    value={formData.firstName}
-                    onChange={handleChange}
-                  />
-                </FormControl>
-                <FormControl id="lastName" mb={3}>
-                  <FormLabel>Last name</FormLabel>
-                  <Input
-                    type="text"
-                    name="lastName"
-                    value={formData.lastName}
-                    onChange={handleChange}
-                  />
-                </FormControl>
-                <FormControl id="email" mb={3}>
-                  <FormLabel>Email</FormLabel>
-                  <Input
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                  />
-                </FormControl>
-                <FormControl id="password" mb={6}>
-                  <FormLabel>Password</FormLabel>
-                  <Input
-                    type={showPassword ? 'text' : 'password'}
-                    name="password"
-                    value={formData.password}
-                    onChange={handleChange}
-                  />
+    <Box
+      // bgImage={
+      //   "https://images.unsplash.com/photo-1613929728701-c97c4c4dca37?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80"
+      // }
+      bgPosition="center"
+      bgRepeat="no-repeat"
+      h="800px"
+    >
+      <Box bg={"rgba(255, 255, 255, 0.7)"} w={"full"} h={"full"} pt={"30px"}>
+        <center>
+          <a href="/">
+            <img src={logo} alt="Logo" width="200" height="200" />
+          </a>
+        </center>
+        <Heading as="h3" size="lg" textAlign="center" mt="6">
+          Register an Account
+        </Heading>
+        <Box maxW={"md"} mx={"auto"} mt="8" px="4">
+          <Formik
+            initialValues={{
+              username: "",
+              email: "",
+              phone: "",
+              password: "",
+              confirmPassword: "",
+            }}
+            validationSchema={validationSchema}
+            onSubmit={handleSubmit}
+          >
+            {(props) => (
+              <Form>
+                <Stack spacing="4">
+                  <Field name="username">
+                    {({ field, form }) => (
+                      <FormControl
+                        isInvalid={form.errors.username && form.touched.username}
+                      >
+                        <FormLabel htmlFor="username">Username</FormLabel>
+                        <Input
+                          {...field}
+                          id="username"
+                          placeholder="Enter your username"
+                        />
+                        <FormErrorMessage>
+                          {form.errors.username}
+                        </FormErrorMessage>
+                      </FormControl>
+                    )}
+                  </Field>
+                  <Field name="email">
+                    {({ field, form }) => (
+                      <FormControl
+                        isInvalid={form.errors.email && form.touched.email}
+                      >
+                        <FormLabel htmlFor="email">Email</FormLabel>
+                        <Input
+                          {...field}
+                          id="email"
+                          placeholder="Enter your email address"
+                        />
+                        <FormErrorMessage>
+                          {form.errors.email}
+                        </FormErrorMessage>
+                      </FormControl>
+                    )}
+                  </Field>
+                  <Field name="phone">
+                    {({ field, form }) => (
+                      <FormControl
+                        isInvalid={form.errors.phone && form.touched.phone}
+                      >
+                        <FormLabel htmlFor="phone">Phone</FormLabel>
+                        <Input
+                          {...field}
+                          id="phone"
+                          placeholder="Enter your phone number"
+                        />
+                        <FormErrorMessage>
+                          {form.errors.phone}
+                        </FormErrorMessage>
+                      </FormControl>
+                    )}
+                  </Field>
+                  <Field name="password">
+                    {({ field, form }) => (
+                      <FormControl
+                        isInvalid={form.errors.password && form.touched.password}
+                      >
+                        <FormLabel htmlFor="password">Password</FormLabel>
+                        <InputGroup>
+                          <Input
+                            {...field}
+                            id="password"
+                            type={showPassword ? "text" : "password"}
+                            placeholder="Enter your password"
+                          />
+                          <InputRightElement width="3rem">
+                            <Button
+                              h="1.5rem"
+                              size="sm"
+                              onClick={togglePasswordVisibility}
+                            >
+                              {showPassword ? (
+                                <ViewOffIcon />
+                              ) : (
+                                <ViewIcon />
+                              )}
+                            </Button>
+                          </InputRightElement>
+                        </InputGroup>
+                        <FormErrorMessage>
+                          {form.errors.password}
+                        </FormErrorMessage>
+                      </FormControl>
+                    )}
+                  </Field>
+                  <Field name="confirmPassword">
+                    {({ field, form }) => (
+                      <FormControl
+                        isInvalid={
+                          form.errors.confirmPassword &&
+                          form.touched.confirmPassword
+                        }
+                      >
+                        <FormLabel htmlFor="confirmPassword">
+                          Confirm Password
+                        </FormLabel>
+                        <InputGroup>
+                          <Input
+                            {...field}
+                            id="confirmPassword"
+                            type={showPassword ? "text" : "password"}
+                            placeholder="Confirm your password"
+                          />
+                          <InputRightElement width="3rem">
+                            <Button
+                              h="1.5rem"
+                              size="sm"
+                              onClick={togglePasswordVisibility}
+                            >
+                              {showPassword ? (
+                                <ViewOffIcon />
+                              ) : (
+                                <ViewIcon />
+                              )}
+                            </Button>
+                          </InputRightElement>
+                        </InputGroup>
+                        <FormErrorMessage>
+                          {form.errors.confirmPassword}
+                        </FormErrorMessage>
+                      </FormControl>
+                    )}
+                  </Field>
                   <Button
-                    variant="link"
-                    colorScheme="blue"
-                    size="sm"
-                    mt={2}
-                    onClick={handleTogglePassword}
+                    mt="4"
+                    colorScheme="teal"
+                    isLoading={props.isSubmitting}
+                    type="submit"
+                    width="full"
                   >
-                    {showPassword ? 'Hide Password' : 'Show Password'}
+                    Register
                   </Button>
-                </FormControl>
-                {!isValid && (
-                  <Text color="red.500" mb={4}>
-                    Password should have at least 6 characters, at least 1 symbol, and at least 1 uppercase letter.
-                  </Text>
-                )}
-                <Button type="submit" colorScheme="blue" mb={6}>
-                  Create account
-                </Button>
-              </form>
-              <Text>
-                Already have an account?{' '}
-                <Link to="/login" textColor={'red'}>
-                  Log in here
-                </Link>
-              </Text>
-            </Box>
-          </ModalBody>
-          <ModalFooter mt={'-10'}>
-            <Button colorScheme="blue" onClick={handleCloseModal}>
-              Close
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
+                </Stack>
+              </Form>
+            )}
+          </Formik>
+          <Text mt="4" textAlign="center">
+            Already have an account?{" "}
+            <Link href="/login" color="teal" fontWeight="bold">
+              Login here
+            </Link>
+          </Text>
+        </Box>
+      </Box>
     </Box>
   );
 };

@@ -70,7 +70,16 @@ export default function CaptionCarousel() {
   ];
 
   return (
-    <Box position="relative" height="400px" width="full" overflow="hidden" mt={"120px"} borderRadius={"50px"} bg="transparent" opacity={0.5}>
+    <Box 
+    position="relative" 
+    height="600px" 
+    width="100%" 
+    overflow="hidden" 
+    mt={"20px"} 
+    px={'50px'}
+    // borderRadius={"50px"} 
+    bg="transparent" opacity={0.5}
+    >
       <link
         rel="stylesheet"
         type="text/css"

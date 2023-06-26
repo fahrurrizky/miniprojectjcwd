@@ -35,9 +35,9 @@ import RegistrationForm from '../components_landingpage/RegistrationForm';
           minH={'60px'}
           py={{ base: 2 }}
           px={{ base: 4 }}
-          // borderBottom={5}
-          // borderStyle={'solid'}
-          // borderColor={useColorModeValue('black')}
+          borderBottom={5}
+          borderStyle={'solid'}
+          borderColor={useColorModeValue('black')}
           align={'center'}
           position={"fixed"}
           w={"100%"}

@@ -54,9 +54,9 @@ const BloggingFeature = () => {
   };
 
   return (
-    <Box py={8} width={'1200px'} mx="auto">
+    <Box py={8} width={'900px'} mx="auto">
       <center>
-        <img src={logo} alt="Logo" width="50%" />
+        <img src={logo} alt="Logo" width="30%" />
       </center>
       <Heading as="h2" size="lg" mb={6}>
         Create a Blog
@@ -96,7 +96,16 @@ const BloggingFeature = () => {
             <ReactQuill value={content} h={'200px'} onChange={handleContent} required></ReactQuill>
           </div>
         </FormControl>
-
+        <FormControl mb={4}>
+          <FormLabel alignContent={'center'}>Video</FormLabel>
+          <Input
+            type="file"
+            variant={''}
+            accept=".jpeg,.jpg,.png,.gif"
+            onChange={handleImageChange}
+          />
+          {previewImage && <img src={previewImage} alt="Preview" width="200px" />}
+        </FormControl>
         <FormControl mb={4}>
           <FormLabel>Keywords</FormLabel>
           <Input type="text" />
