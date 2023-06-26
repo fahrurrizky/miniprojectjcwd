@@ -1,3 +1,4 @@
+// import { Link } from "react-router-dom";
 import {
   Box,
   Flex,
@@ -48,12 +49,12 @@ export default function WithSubnavigation() {
             <img src={logo} alt="Logo" width="250px" />
           </a>
           <Flex ml={5} px={"200"}>
-            <DesktopNav />
+            <DesktopNav/>
           </Flex>
         </Flex>
 
         <Flex direction={"row"} ml={"20"}>
-          <Link href="/login" color="teal">
+          <a href="/login">
             <Button
               variant={""}
               textColor={"black"}
@@ -63,8 +64,8 @@ export default function WithSubnavigation() {
             >
               Sign In
             </Button>
-          </Link>
-          <Link href="/register" color="teal">
+          </a>
+          <a href="/register">
             <Button
               variant={""}
               textColor={"black"}
@@ -75,7 +76,7 @@ export default function WithSubnavigation() {
               {/* <PiUserCirclePlusFill size={"30"} /> */}
               Get Started
             </Button>
-          </Link>
+          </a>
         </Flex>
       </Flex>
     </Box>
@@ -88,23 +89,23 @@ const DesktopNav = () => {
   // const popoverContentBgColor = useColorModeValue("white", "gray.800");
 
   return (
-    <Stack direction={"row"} spacing={3}>
+    <Stack direction={"row"} spacing={3} textColor={'black'} >
       {NAV_ITEMS.map((navItem) => (
         <Flex
           key={navItem.label}
           alignItems={"center"}
           fontSize={"sm"}
           alignContent={"center"}
+          textColor={'black'}
         >
           <Popover trigger={"hover"} placement={"bottom-start"}>
             <PopoverTrigger>
               <Link
                 p={1}
-                href={navItem.href ?? "#"}
+                to={navItem.href ?? "#"}
                 fontSize={"sm"}
                 fontWeight={500}
                 // color={linkColor}
-                color={"black"}
               >
                 {navItem.label}
               </Link>
@@ -118,8 +119,9 @@ const DesktopNav = () => {
                 p={4}
                 rounded={"xl"}
                 minW={"sm"}
-                // bg="transparent"
-                // opacity={9}
+                backgroundColor={'blackAlpha.100'}
+                bg="transparent"
+                opacity={9}
               >
                 <Stack>
                   {navItem.children.map((child) => (
@@ -149,7 +151,7 @@ const DesktopSubNav = ({ label, href, subLabel }) => {
         <Box>
           <Text
             transition={"all .3s ease"}
-            _groupHover={{ color: "green.400" }}
+            _groupHover={{ color: "yellow.400" }}
             fontWeight={500}
           >
             {label}
