@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { ExternalLinkIcon, ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import logo from "../components_landingpage/Bee1.png";
 import {useNavigate} from 'react-router-dom'
+
 import { loginSuccess } from "../../redux/AuthReduser";
 import {useSelector, useDispatch} from "react-redux";
 import {
@@ -18,6 +19,7 @@ import {
   Text,
   InputGroup,
   InputRightElement,
+  Link as LinkChakra,
 } from "@chakra-ui/react";
 
 const LoginForm = () => {
@@ -144,15 +146,19 @@ const LoginForm = () => {
           </Formik>
           <Text>
             Forgot your password?{" "}
+            <LinkChakra textColor={'teal'}>
             <Link to="/reset-password" Color={"teal"}>
               Reset Password <ExternalLinkIcon mx="2px" />
             </Link>
+            </LinkChakra>
           </Text>
           <Text>
             Don't have an account?{" "}
-            <Link to="/register" textColor={"red"}>
+            <LinkChakra textColor={'teal'}>
+            <Link to="/register" >
               Sign up here <ExternalLinkIcon mx="2px" />
             </Link>
+            </LinkChakra>
           </Text>
         </Box>
       </Box>

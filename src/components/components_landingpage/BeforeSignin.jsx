@@ -1,4 +1,4 @@
-// import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   Box,
   Flex,
@@ -7,11 +7,12 @@ import {
   Button,
   Stack,
   Icon,
-  Link,
+  // Link,
   Popover,
   PopoverTrigger,
   PopoverContent,
   useColorModeValue,
+  Link as LinkChakra,
   // useDisclosure,
 } from "@chakra-ui/react";
 // import { PiUserCirclePlusFill } from "react-icons/pi";
@@ -45,18 +46,18 @@ export default function WithSubnavigation() {
       >
         {/* logo */}
         <Flex>
-          <a href="/">
+          <Link to="/">
             <img src={logo} alt="Logo" width="250px" />
-          </a>
+          </Link>
           <Flex ml={5} px={"200"}>
-            <DesktopNav/>
+            <DesktopNav />
           </Flex>
         </Flex>
 
-        <Flex direction={"row"} ml={"20"}>
-          <a href="/login">
+        <Flex direction={"row"} ml={'130'}>
+          <Link to="/login">
             <Button
-              variant={""}
+              variant={''}
               textColor={"black"}
               _hover={{ bg: "gray.100" }}
               fontSize={"sm"}
@@ -64,8 +65,8 @@ export default function WithSubnavigation() {
             >
               Sign In
             </Button>
-          </a>
-          <a href="/register">
+          </Link>
+          <Link to="/register">
             <Button
               variant={""}
               textColor={"black"}
@@ -76,7 +77,7 @@ export default function WithSubnavigation() {
               {/* <PiUserCirclePlusFill size={"30"} /> */}
               Get Started
             </Button>
-          </a>
+          </Link>
         </Flex>
       </Flex>
     </Box>
@@ -107,7 +108,9 @@ const DesktopNav = () => {
                 fontWeight={500}
                 // color={linkColor}
               >
+                <LinkChakra>
                 {navItem.label}
+                </LinkChakra>
               </Link>
             </PopoverTrigger>
 
@@ -119,9 +122,10 @@ const DesktopNav = () => {
                 p={4}
                 rounded={"xl"}
                 minW={"sm"}
+                textColor={'white'}
                 backgroundColor={'blackAlpha.100'}
-                bg="transparent"
-                opacity={9}
+                bg="RGBA(0, 0, 0, 0.5)"
+                opacity={0.9}
               >
                 <Stack>
                   {navItem.children.map((child) => (
@@ -167,7 +171,7 @@ const DesktopSubNav = ({ label, href, subLabel }) => {
           align={"center"}
           flex={1}
         >
-          <Icon color={"green.400"} w={5} h={5} as={ChevronRightIcon} />
+          <Icon color={"yellow.400"} w={5} h={5} as={ChevronRightIcon} />
         </Flex>
       </Stack>
     </Link>
