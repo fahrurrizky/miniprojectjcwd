@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from "react-router-dom";
 import {
   Box,
   FormControl,
@@ -8,10 +9,11 @@ import {
   Button,
   Heading,
   Text,
-  Link,
+  Link as LinkChakra,
 } from '@chakra-ui/react';
 import 'react-quill/dist/quill.snow.css';
 import ReactQuill from 'react-quill';
+import { ExternalLinkIcon } from "@chakra-ui/icons";
 import logo from '../components/components_landingpage/Bee1.png';
 
 const BloggingFeature = () => {
@@ -54,10 +56,10 @@ const BloggingFeature = () => {
   };
 
   return (
-    <Box py={8} width={'900px'} mx="auto">
-      <center>
+    <Box py={100} width={'900px'} mx="auto" >
+      {/* <center>
         <img src={logo} alt="Logo" width="30%" />
-      </center>
+      </center> */}
       <Heading as="h2" size="lg" mb={6}>
         Create a Blog
       </Heading>
@@ -123,10 +125,11 @@ const BloggingFeature = () => {
       {/* Message for non-verified users */}
       <Text mt={4}>
         You need to be a verified user to create a blog. Please{' '}
-        <Link href="/verify" textColor={'red'}>
-          verify your account
+        <LinkChakra textColor={'teal'}>
+        <Link to="/verification/:token">
+          verify your account<ExternalLinkIcon mx="2px" />
         </Link>
-        .
+        </LinkChakra>
       </Text>
     </Box>
   );

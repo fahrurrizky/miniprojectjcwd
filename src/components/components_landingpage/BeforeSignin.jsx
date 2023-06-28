@@ -24,14 +24,14 @@ import {
   ChevronRightIcon,
 } from "@chakra-ui/icons";
 import logo from "./Bee2.png";
+import { CiEdit } from "react-icons/ci";
 // import LoginForm from '../components_landingpage/LoginForm';
 // import RegistrationForm from '../components_landingpage/RegistrationForm';
 
 export default function WithSubnavigation() {
   // const { isOpen, onOpen, onClose } = useDisclosure();
   // const { onToggle } = useDisclosure();
-  const login = localStorage.getItem('token')
-
+  const login = localStorage.getItem("token");
 
   return (
     <Box>
@@ -49,15 +49,15 @@ export default function WithSubnavigation() {
           <Link to="/">
             <img src={logo} alt="Logo" width="250px" />
           </Link>
-          <Flex ml={5} px={"200"}>
+          <Flex ml={5} px={"185"}>
             <DesktopNav />
           </Flex>
         </Flex>
 
-        <Flex direction={"row"} ml={'130'}>
+        <Flex direction={"row"} ml={"130"}>
           <Link to="/login">
             <Button
-              variant={''}
+              variant={""}
               textColor={"black"}
               _hover={{ bg: "gray.100" }}
               fontSize={"sm"}
@@ -90,14 +90,14 @@ const DesktopNav = () => {
   // const popoverContentBgColor = useColorModeValue("white", "gray.800");
 
   return (
-    <Stack direction={"row"} spacing={3} textColor={'black'} >
+    <Stack direction={"row"} spacing={3} textColor={"black"}>
       {NAV_ITEMS.map((navItem) => (
         <Flex
           key={navItem.label}
           alignItems={"center"}
           fontSize={"sm"}
           alignContent={"center"}
-          textColor={'black'}
+          textColor={"black"}
         >
           <Popover trigger={"hover"} placement={"bottom-start"}>
             <PopoverTrigger>
@@ -105,11 +105,14 @@ const DesktopNav = () => {
                 p={1}
                 to={navItem.href ?? "#"}
                 fontSize={"sm"}
-                fontWeight={500}
+                // fontWeight={500}
                 // color={linkColor}
               >
-                <LinkChakra>
-                {navItem.label}
+                <LinkChakra textColor={"black"} fontWeight={"medium"}>
+                  <Flex>
+                    {navItem.label}
+                    <span>{navItem.icon}</span>
+                  </Flex>
                 </LinkChakra>
               </Link>
             </PopoverTrigger>
@@ -122,8 +125,8 @@ const DesktopNav = () => {
                 p={4}
                 rounded={"xl"}
                 minW={"sm"}
-                textColor={'white'}
-                backgroundColor={'blackAlpha.100'}
+                textColor={"white"}
+                backgroundColor={"blackAlpha.100"}
                 bg="RGBA(0, 0, 0, 0.5)"
                 opacity={0.9}
               >
@@ -160,7 +163,7 @@ const DesktopSubNav = ({ label, href, subLabel }) => {
           >
             {label}
           </Text>
-          <Text fontSize={"sm"}>{subLabel}</Text>
+          {/* <Text fontSize={"sm"}>{subLabel}</Text> */}
         </Box>
         <Flex
           transition={"all .3s ease"}
@@ -183,35 +186,40 @@ const NAV_ITEMS = [
     label: "Category",
     children: [
       {
-        label: "Explore Design Work",
-        // subLabel: "Trending Design to inspire you",
-        href: "#",
-      },
-      {
-        label: "New & Noteworthy",
+        label: "Busines",
         // subLabel: "Up-and-coming Designers",
         href: "#",
       },
       {
-        label: "New & Noteworthy",
+        label: "Economy",
         // subLabel: "Up-and-coming Designers",
         href: "#",
       },
       {
-        label: "New & Noteworthy",
+        label: "Thecnology",
         // subLabel: "Up-and-coming Designers",
         href: "#",
       },
       {
-        label: "New & Noteworthy",
+        label: "Sport",
         // subLabel: "Up-and-coming Designers",
         href: "#",
       },
       {
-        label: "New & Noteworthy",
+        label: "Culinary",
         // subLabel: "Up-and-coming Designers",
         href: "#",
       },
+      {
+        label: "Internationl",
+        // subLabel: "Up-and-coming Designers",
+        href: "#",
+      },
+      {
+        label: "Fiction",
+        // subLabel: "Up-and-coming Designers",
+        href: "#",
+      }
     ],
   },
   {
@@ -240,5 +248,6 @@ const NAV_ITEMS = [
   {
     label: "Write",
     href: "/article",
+    icon: <CiEdit size={20} />,
   },
 ];

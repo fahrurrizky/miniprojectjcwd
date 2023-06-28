@@ -1,4 +1,6 @@
 import React from "react";
+import { motion } from 'framer-motion';
+import { Link } from "react-router-dom";
 import photo from "./pp.jpeg";
 import {
   Box,
@@ -16,7 +18,7 @@ import {
   MenuList,
   MenuItem,
   Text,
-  Link,
+  Link as LinkChakra,
   MenuDivider,
   useColorModeValue,
   Popover,
@@ -25,7 +27,7 @@ import {
   Icon,
   // useColorModeValue,
 } from "@chakra-ui/react";
-import { LuEdit } from "react-icons/lu";
+import { CiEdit } from "react-icons/ci";
 import { IoNotificationsOutline, IoCreateOutline } from "react-icons/io5";
 import { BsSearch } from "react-icons/bs";
 import { ChevronRightIcon } from "@chakra-ui/icons";
@@ -45,6 +47,8 @@ import {
 const Navbar = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const navigate = useNavigate();
+
+  
   const handleLogout = () => {
     localStorage.removeItem("token");
     window.location.reload();
@@ -73,33 +77,34 @@ const Navbar = () => {
         </Flex>
         <Flex ml={"5"}>
           <Flex>
-            {/* <Button variant="" mr={-3} fontSize={"15px"}>
-              <IoCreateOutline size={30} /> Write
-            </Button> */}
+            {/* Search */}
             <Button variant={"unstyled"} mr={"-2.5"}>
               <BsSearch onClick={onOpen} size={"22"} />
             </Button>
-            <Modal isOpen={isOpen} onClose={onClose}>
+            <Modal isOpen={isOpen} onClose={onClose} size={'full'} blockScrollOnMount={false}>
               <ModalOverlay />
-              <ModalContent>
-                <ModalHeader>Search</ModalHeader>
-                <ModalCloseButton />
-                <ModalBody>
+              <ModalContent bg="rgba(0, 0, 0, 0.6)" opacity={0.8} py={'300px'}>
+                <ModalHeader textColor={'white'} px={'300px'}>Search</ModalHeader>
+                <ModalCloseButton color="white" size={'2xl'} mt={'372px'} mr={'250px'}/>
+                <ModalBody px={'300px'}>
                   <Input
                     placeholder="Search......."
-                    borderColor={useColorModeValue("black.300", "white")}
+                    borderColor={useColorModeValue("white", "white")}
                     borderRadius="5px"
-                    size={"sm"}
+                    size={"md"}
+                    textColor={'white'}
                   />
                 </ModalBody>
-                <ModalFooter>
+                {/* <ModalFooter>
                   <button onClick={onClose}>Close</button>
-                </ModalFooter>
+                </ModalFooter> */}
               </ModalContent>
             </Modal>
+            {/* Notifcation */}
             <Button variant="" mr={3}>
               <IoNotificationsOutline size={25} />
             </Button>
+            {/* Menu Profile */}
             <Menu isLazy>
               <MenuButton as={Button} size="sm" p={0} rounded="full" mt={"1"}>
                 <Avatar size="sm" src={[photo]} />
@@ -116,12 +121,12 @@ const Navbar = () => {
                   isExternal
                 >
                   <MenuItem>
-                    <VStack align="start">
+                    <Link to="/profilePage" align="start">
                       <Text fontWeight="300">Samudra Biru</Text>
                       <Text fontSize="sm" color="gray.500">
                         @sam_
                       </Text>
-                    </VStack>
+                    </Link>
                   </MenuItem>
                 </Link>
                 <MenuDivider />
@@ -167,26 +172,59 @@ const DesktopNav = () => {
   // const popoverContentBgColor = useColorModeValue("white", "gray.800");
 
   return (
-    <Stack direction={"row"} spacing={3}>
+    <Stack direction={"row"} spacing={3} textColor={"black"} >
       {NAV_ITEMS.map((navItem) => (
-        <Flex
-          key={navItem.label}
-          alignItems={"center"}
-          fontSize={"sm"}
-          alignContent={"center"}
-        >
-          {/* <IoCreateOutline size={30} /> */}
-          <Popover trigger={"hover"} placement={"bottom-start"}>
-            <PopoverTrigger>
+      <Flex
+        key={navItem.label}
+        alignItems={"center"}
+        fontSize={"sm"}
+        alignContent={"center"}
+        textColor={"black"}
+        // gap={"3"}
+        // fontWeight={'medium'}
+      >
+        {/* <Box>
+          <LinkChakra>
+            <Link>Category</Link>
+          </LinkChakra>
+        </Box>
+        <Box>
+          <LinkChakra>
+            <Link>Find you want</Link>
+          </LinkChakra>
+        </Box>
+        <Box>
+          <LinkChakra>
+            <Link>Our story</Link>
+          </LinkChakra>
+        </Box>
+        <Box>
+          <LinkChakra>
+            <Link>Membership</Link>
+          </LinkChakra>
+        </Box>
+        <Box>
+          <LinkChakra> 
+          <Flex>
+            <Link>Write</Link> <CiEdit size={'20'}/>
+          </Flex>
+          </LinkChakra>
+        </Box> */}
+        <Popover trigger={"hover"} placement={"bottom-start"}>
+        <PopoverTrigger>
               <Link
                 p={1}
-                href={navItem.href ?? "#"}
+                to={navItem.href ?? "#"}
                 fontSize={"sm"}
-                fontWeight={500}
+                // fontWeight={500}
                 // color={linkColor}
-                color={"black"}
               >
-                {navItem.label}
+                <LinkChakra textColor={"black"} fontWeight={"medium"}>
+                  <Flex>
+                    {navItem.label}
+                    <span>{navItem.icon}</span>
+                  </Flex>
+                </LinkChakra>
               </Link>
             </PopoverTrigger>
 
@@ -198,8 +236,10 @@ const DesktopNav = () => {
                 p={4}
                 rounded={"xl"}
                 minW={"sm"}
-                // bg="transparent"
-                // opacity={9}
+                textColor={"white"}
+                backgroundColor={"blackAlpha.100"}
+                bg="RGBA(0, 0, 0, 0.5)"
+                opacity={0.9}
               >
                 <Stack>
                   {navItem.children.map((child) => (
@@ -229,7 +269,7 @@ const DesktopSubNav = ({ label, href, subLabel }) => {
         <Box>
           <Text
             transition={"all .3s ease"}
-            _groupHover={{ color: "green.400" }}
+            _groupHover={{ color: "yellow.400" }}
             fontWeight={500}
           >
             {label}
@@ -245,7 +285,7 @@ const DesktopSubNav = ({ label, href, subLabel }) => {
           align={"center"}
           flex={1}
         >
-          <Icon color={"green.400"} w={5} h={5} as={ChevronRightIcon} />
+          <Icon color={"yellow.400"} w={5} h={5} as={ChevronRightIcon} />
         </Flex>
       </Stack>
     </Link>
@@ -314,6 +354,6 @@ const NAV_ITEMS = [
   {
     label: "Write",
     href: "/article",
-    Icon: "IoCreateOutline",
+    icon: <CiEdit size={20} />,
   },
 ];

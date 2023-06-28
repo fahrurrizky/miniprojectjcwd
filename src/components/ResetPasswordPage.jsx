@@ -1,8 +1,9 @@
+import { Link } from "react-router-dom";
+import { ExternalLinkIcon, ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { useState } from "react";
-import logo from "./Bee1.png";
-import { Link } from "@chakra-ui/react";
-import { ExternalLinkIcon } from "@chakra-ui/icons";
-
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
+import logo from "./components_landingpage/Bee1.png";
 import {
   Box,
   FormControl,
@@ -11,76 +12,142 @@ import {
   Button,
   Heading,
   Text,
+  InputGroup,
+  InputRightElement,
+  Link as LinkChakra,
 } from "@chakra-ui/react";
+import axios from "axios";
 
 const ResetPasswordPage = () => {
-  const [formData, setFormData] = useState({
-    email: "",
-  });
+  const [showPassword, setShowPassword] = useState(false);
+  const url = window.location.href.split("/")
+  const token = url[url.length - 1];
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: value,
-    }));
+  const handleTogglePassword = () => {
+    setShowPassword(!showPassword);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(formData);
+  const handleSubmit = (values, { setSubmitting }) => {
+    axios
+      .patch(
+        "https://minpro-blog.purwadhikabootcamp.com/api/auth/resetPass",
+        {
+          password: values.password,
+          confirmPassword: values.confirmPassword,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then(function (response) {
+        console.log(response.data);
+        setSubmitting(false);
+      })
+      .catch(function (error) {
+        console.log(error);
+        setSubmitting(false);
+      });
   };
 
   return (
-    <Box
-      bgImage={
-        "https://images.unsplash.com/photo-1613929728701-c97c4c4dca37?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80"
-      }
-      bgPosition="center"
-      bgRepeat="no-repeat"
-      h="800px"
-    >
-      <Box bg={"rgba(255, 255, 255, 0.7)"} w={"full"} h={"full"} pt={"120px"}>
-        <center>
-        <a href="/">
-          <img src={logo} alt="Logo" width="300px" />
-          </a>
-        </center>
+    <Box>
+      <Box bg={"rgba(255, 255, 255, 0.7)"} w={"full"} h={"full"} pt={"90px"}>
         <Box
           m="auto"
-          borderWidth="3px"
-          borderRadius="md"
-          borderColor={"black"}
           p={6}
-          w={"50%"}
+          w={"30%"}
         >
-          <Heading as="h2" size="lg" mb={6} textAlign={'center'}>
+          <Heading as="h2" size="lg" mb={6} textAlign={"center"}>
             Reset your password
           </Heading>
-          <Text mb={6}>
-            Enter the email address associated with your account and we'll send
-            you instructions to reset your password.
-          </Text>
-          <form onSubmit={handleSubmit}>
-            <FormControl id="email" mb={6}>
-              <FormLabel>Email</FormLabel>
-              <Input
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                borderColor={"black"}
-              />
-            </FormControl>
-            <Button type="submit" colorScheme="gray" mb={6} textColor={"black"} variant={'outline'} borderColor={'black'}>
-              Reset password
-            </Button>
-          </form>
+          <Formik
+            initialValues={{
+              password: "",
+              confirmPassword: "",
+            }}
+            validationSchema={Yup.object({
+              password: Yup.string()
+                .matches(
+                  /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[^\w\s]).{6,}$/,
+                  "Password must contain at least 6 characters, 1 symbol, and 1 uppercase letter"
+                )
+                .required("New Password is required"),
+              confirmPassword: Yup.string()
+                .oneOf([Yup.ref("password"), null], "Passwords must match")
+                .required("Confirm Password is required"),
+            })}
+            onSubmit={handleSubmit}
+          >
+            <Form>
+              <FormControl id="password" mb={6}>
+                <FormLabel>New Password</FormLabel>
+                <InputGroup>
+                  <Field
+                    type={showPassword ? "text" : "password"}
+                    name="password"
+                    as={Input}
+                    placeholder="Enter your password"
+                  />
+                  <InputRightElement width="3rem">
+                    <Button
+                      h="1.5rem"
+                      size="sm"
+                      onClick={handleTogglePassword}
+                    >
+                      {showPassword ? (
+                        <ViewOffIcon boxSize={4} />
+                      ) : (
+                        <ViewIcon boxSize={4} />
+                      )}
+                    </Button>
+                  </InputRightElement>
+                </InputGroup>
+                <ErrorMessage name="password" component={Text} color="red" />
+              </FormControl>
+              <FormControl id="confirmPassword" mb={6}>
+                <FormLabel>Confirm New Password</FormLabel>
+                <InputGroup>
+                  <Field
+                    type={showPassword ? "text" : "password"}
+                    name="confirmPassword"
+                    as={Input}
+                    placeholder="Enter your password"
+                  />
+                  <InputRightElement width="3rem">
+                    <Button
+                      size="sm"
+                      h="1.5rem"
+                      onClick={handleTogglePassword}
+                    >
+                      {showPassword ? (
+                        <ViewOffIcon boxSize={4} />
+                      ) : (
+                        <ViewIcon boxSize={4} />
+                      )}
+                    </Button>
+                  </InputRightElement>
+                </InputGroup>
+                <ErrorMessage name="confirmPassword" component={Text} color="red" />
+              </FormControl>
+              <Button
+                type="submit"
+                colorScheme="teal"
+                mb={6}
+                width="full"
+              >
+                Reset Password
+              </Button>
+            </Form>
+          </Formik>
           <Text>
             Remember your password?{" "}
-            <Link href="/login" textColor={'teal'}>
-              Log in here <ExternalLinkIcon mx="2px" />
-            </Link>
+            <LinkChakra textColor={'teal'}>
+              <Link to="/login">
+                Log in here <ExternalLinkIcon mx="2px" />
+              </Link>
+            </LinkChakra>
           </Text>
         </Box>
       </Box>

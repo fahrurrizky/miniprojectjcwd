@@ -9,6 +9,7 @@ import {
   Text,
   Link,
   Image,
+  Flex,
   useColorModeValue
 } from '@chakra-ui/react';
 // Here we have used react-icons package for the icons
@@ -39,94 +40,25 @@ function Card({
       >
         {/* {headerImage ? <Image alt="header image" src={headerImage} /> : ''} */}
   
-        <Grid
-          templateColumns={{ base: '1fr', sm: 'max-content 1fr' }}
-          gap={2}
-          p={4}
-          bg={useColorModeValue('gray.100', 'gray.800')}
-        >
-          <HStack d={{ base: 'flex', sm: 'block' }}>
-            <Image alt="user profile" src={userProfile} w="8" borderRadius="full" />
-            <VStack align="flex-start" spacing={0} d={{ base: 'flex', sm: 'none' }}>
-              <Text color="#4d5760" fontSize="14px" fontWeight="500">
-                {username}
+        <Flex spacing={9} align="start" mt={"10"}>
+            <Box>
+              <Image
+                src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8ZWR1Y2F0aW9ufGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60"
+                alt="Dan Abramov"
+                minW="90px"
+                maxW="90px"
+                mr={"5"}
+              />
+            </Box>
+            <Link to="/category/technology">
+              <Heading size="sm" mb={"2"}>
+                If You Don’t Stand For Something You Will Fall For Anything
+              </Heading>
+              <Text fontSize={"sm"} as={"i"}>
+                March 6, 2019
               </Text>
-              <Text color="#4d5760" fontSize="12px">
-                {publishedDate}
-              </Text>
-            </VStack>
-          </HStack>
-          <Box>
-            <VStack align="flex-start" spacing={0} d={{ base: 'none', sm: 'flex' }}>
-              <Text color="#4d5760" fontSize="14px" fontWeight="500">
-                {username}
-              </Text>
-              <Text color="#4d5760" fontSize="12px">
-                {publishedDate}
-              </Text>
-            </VStack>
-            <Heading fontSize={{ base: 'xl', sm: '3xl' }} mt="3">
-              <Link href={postLink} _hover={{ color: '#323ebe', textDecoration: 'none' }} isExternal>
-                {title}
-              </Link>
-            </Heading>
-            <HStack mt="3" fontSize="14px" color="#64707d">
-              {tagList.map((tag, idx) => (
-                <Text as={Link} key={idx}>
-                  #{tag}
-                </Text>
-              ))}
-            </HStack>
-            <HStack mt={3}>
-              <Button
-                leftIcon={<BsHeart />}
-                ml={-2}
-                bg="transparent"
-                padding="6px 8px"
-                height="auto"
-                fontWeight="normal"
-                fontSize="14px"
-                lineHeight="1.2"
-                rounded="md"
-                _hover={{ bg: useColorModeValue('gray.200', 'gray.600') }}
-              >
-                {reactionsCount}
-                <Box ml="2" as="span" d={{ base: 'none', sm: 'block' }}>
-                  reactions
-                </Box>
-              </Button>
-              <Button
-                leftIcon={<FaRegComment />}
-                bg="transparent"
-                padding="6px 8px"
-                height="auto"
-                fontWeight="normal"
-                fontSize="14px"
-                lineHeight="1.2"
-                rounded="md"
-                _hover={{ bg: useColorModeValue('gray.200', 'gray.600') }}
-              >
-                {commentsCount}{' '}
-                <Box ml="2" as="span" d={{ base: 'none', sm: 'block' }}>
-                  comments
-                </Box>
-              </Button>
-              <Spacer />
-              <Text fontSize="12px">{readingTime} min read</Text>
-              <Button
-                bg={useColorModeValue('gray.200', 'gray.600')}
-                padding="8px 12px"
-                height="auto"
-                fontWeight="normal"
-                fontSize="14px"
-                rounded="md"
-                _hover={{ bg: useColorModeValue('gray.300', 'gray.500') }}
-              >
-                Save
-              </Button>
-            </HStack>
-          </Box>
-        </Grid>
+            </Link>
+          </Flex>
       </Box>
     );
   }

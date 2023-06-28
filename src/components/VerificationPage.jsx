@@ -1,5 +1,5 @@
-import { Box, Heading, Text, Button, Flex } from "@chakra-ui/react";
-import { Link } from "@chakra-ui/react";
+import { Box, Heading, Text, Button, Flex, Link } from "@chakra-ui/react";
+import { Link as LinkChakra,} from "@chakra-ui/react";
 import { ExternalLinkIcon } from "@chakra-ui/icons";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
@@ -44,21 +44,21 @@ const VerificationPage = () => {
   return (
     <Box
       // pt={'100'}
-      bgImage={
-        "https://images.unsplash.com/photo-1613929728701-c97c4c4dca37?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80"
-      }
-      bgPosition="center"
-      bgRepeat="no-repeat"
+      // bgImage={
+      //   "https://images.unsplash.com/photo-1613929728701-c97c4c4dca37?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80"
+      // }
+      // bgPosition="center"
+      // bgRepeat="no-repeat"
       // bgImg={'white'}
       // bg="transparent" opacity={0.18}
-      h="800px"
+      // h="800px"
     >
       <Box bg={"rgba(255, 255, 255, 0.7)"} w={"full"} h={"full"} pt={"120px"}>
-        <center>
+        {/* <center>
           <a href="/">
             <img src={logo} alt="Logo" width="300px" />
           </a>
-        </center>
+        </center> */}
         <Box
           maxW={{ base: "90%", md: "80%", lg: "50%" }}
           m="auto"
@@ -70,20 +70,23 @@ const VerificationPage = () => {
           <Heading as="h2" size="lg" mb={6} textAlign={"center"}>
             Verify your email
           </Heading>
-            <Button
-              colorScheme="teal"
-              onClick={handleVerify}
-              mb={6}
-              textColor={"black"}
-              variant={"outline"}
-              borderColor={"black"}
-            >
-              Verify
-            </Button>
             <Text mb={6}>
               A verification email has been sent to your email address. Please
               follow the instructions in the email to verify your account.
             </Text>
+            <center>
+            <Button
+              colorScheme="teal"
+              onClick={handleVerify}
+              mb={6}
+              width="80"
+              // textColor={"black"}
+              // variant={"outline"}
+              // borderColor={"black"}
+            >
+              Verify
+            </Button>
+            </center>
           {token ? null : (
             <Button
               colorScheme="gray"
@@ -98,10 +101,11 @@ const VerificationPage = () => {
           )}
           <Text>
             Didn't receive the email? Check your spam folder or{" "}
-            <Link href="/contact-us" textColor={"teal"}>
+            <LinkChakra textColor={'teal'}>
+            <Link to="/contact-us">
               contact us <ExternalLinkIcon mx="2px" />
             </Link>
-            .
+            </LinkChakra>
           </Text>
         </Box>
       </Box>

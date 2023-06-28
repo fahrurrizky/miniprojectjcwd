@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 // import { Link } from "react-router-dom";
 import { ExternalLinkIcon, ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import logo from "./Bee1.png";
@@ -14,7 +15,7 @@ import {
   InputGroup,
   InputRightElement,
   Stack,
-  Link,
+  Link as LinkChakra,
 } from "@chakra-ui/react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
@@ -80,16 +81,16 @@ const RegistrationForm = () => {
       // bgImage={
       //   "https://images.unsplash.com/photo-1613929728701-c97c4c4dca37?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80"
       // }
-      bgPosition="center"
-      bgRepeat="no-repeat"
-      h="800px"
+      // bgPosition="center"
+      // bgRepeat="no-repeat"
+      // h="800px"
     >
-      <Box bg={"rgba(255, 255, 255, 0.7)"} w={"full"} h={"full"} pt={"30px"}>
-        <center>
+      <Box bg={"rgba(255, 255, 255, 0.7)"} w={"full"} h={"full"} pt={"90px"}>
+        {/* <center>
           <a href="/">
             <img src={logo} alt="Logo" width="200" height="200" />
           </a>
-        </center>
+        </center> */}
         <Heading as="h3" size="lg" textAlign="center" mt="6">
           Register an Account
         </Heading>
@@ -245,9 +246,11 @@ const RegistrationForm = () => {
           </Formik>
           <Text mt="4" textAlign="center">
             Already have an account?{" "}
-            <Link href="/login" color="teal" fontWeight="bold">
-              Login here
+            <LinkChakra textColor={'teal'}>
+            <Link to="/login">
+              Login here <ExternalLinkIcon mx="2px" />
             </Link>
+            </LinkChakra>
           </Text>
         </Box>
       </Box>

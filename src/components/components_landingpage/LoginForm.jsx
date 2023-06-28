@@ -33,24 +33,24 @@ const LoginForm = () => {
 
   return (
     <Box
-      bgImage={
-        "https://images.unsplash.com/photo-1613929728701-c97c4c4dca37?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80"
-      }
-      bgPosition="center"
-      bgRepeat="no-repeat"
-      h="800px"
+      // bgImage={
+      //   "https://images.unsplash.com/photo-1613929728701-c97c4c4dca37?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80"
+      // }
+      // bgPosition="center"
+      // bgRepeat="no-repeat"
+      // h="800px"
     >
       <Box bg={"rgba(255, 255, 255, 0.7)"} w={"full"} h={"full"} pt={"120px"}>
-        <center>
+        {/* <center>
           <a href="/">
             <img src={logo} alt="Logo" width="300px" />
           </a>
-        </center>
+        </center> */}
         <Box
           m="auto"
-          borderWidth="3px"
-          borderRadius="md"
-          borderColor={"black"}
+          // borderWidth="3px"
+          // borderRadius="md"
+          // borderColor={"black"}
           p={6}
           w={"30%"}
         >
@@ -103,7 +103,8 @@ const LoginForm = () => {
                   type="email"
                   name="email"
                   as={Input}
-                  borderColor={"black"}
+                  placeholder="Enter your email address"
+                  // borderColor={"black"}
                 />
                 <ErrorMessage name="email" component={Text} color="red" />
               </FormControl>
@@ -114,19 +115,21 @@ const LoginForm = () => {
                     type={showPassword ? "text" : "password"}
                     name="password"
                     as={Input}
-                    borderColor={"black"}
+                    placeholder="Enter your password"
+                    // borderColor={"black"}
                   />
-                  <InputRightElement width="4.5rem">
+                  <InputRightElement width="3rem">
                     <Button
-                      variant="link"
-                      colorScheme="black"
+                      // variant="link"
+                      // colorScheme="black"
+                      h="1.5rem"
                       size="sm"
                       onClick={handleTogglePassword}
                     >
                       {showPassword ? (
-                        <ViewOffIcon boxSize={4} />
+                        <ViewOffIcon  />
                       ) : (
-                        <ViewIcon boxSize={4} />
+                        <ViewIcon  />
                       )}
                     </Button>
                   </InputRightElement>
@@ -135,10 +138,11 @@ const LoginForm = () => {
               </FormControl>
               <Button
                 type="submit"
-                colorScheme="gray"
+                colorScheme="teal"
                 mb={6}
-                variant={"outline"}
-                borderColor={"black"}
+                width="full"
+                // variant={"outline"}
+                // borderColor={"black"}
               >
                 Log in
               </Button>
@@ -147,7 +151,7 @@ const LoginForm = () => {
           <Text>
             Forgot your password?{" "}
             <LinkChakra textColor={'teal'}>
-            <Link to="/reset-password" Color={"teal"}>
+            <Link to="/forgotpasword" Color={"teal"}>
               Reset Password <ExternalLinkIcon mx="2px" />
             </Link>
             </LinkChakra>
