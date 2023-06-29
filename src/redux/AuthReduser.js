@@ -7,7 +7,7 @@ const initialState = {
     phone: "",
     email: "",
     password: "",
-    // confirmPassword: "",
+    confirmPassword: "",
   },
   login: localStorage.getItem ('token'),
 };

@@ -4,13 +4,15 @@ import { ExternalLinkIcon } from "@chakra-ui/icons";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
-import logo from "./Bee1.png";
+import { useNavigate } from "react-router-dom";
+
+
 
 const VerificationPage = () => {
-  // const location = useLocation();
-  // const token = new URLSearchParams(location.search).get("token");
   const url = window.location.href.split("/");
   const token = url[url.length - 1];
+  const navigate = useNavigate();
+
 
   const handleVerify = async () => {
     try {
@@ -26,6 +28,8 @@ const VerificationPage = () => {
 
       if (response.status === 200) {
         console.log("Account verified successfully");
+        navigate("/login");
+
         // Perform any additional actions after successful verification
       } else {
         console.log("Failed to verify account");
@@ -37,28 +41,11 @@ const VerificationPage = () => {
     }
   };
 
-  // const handleResend = () => {
-  //   console.log("Resending verification email...");
-  // };
 
   return (
     <Box
-      // pt={'100'}
-      // bgImage={
-      //   "https://images.unsplash.com/photo-1613929728701-c97c4c4dca37?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80"
-      // }
-      // bgPosition="center"
-      // bgRepeat="no-repeat"
-      // bgImg={'white'}
-      // bg="transparent" opacity={0.18}
-      // h="800px"
     >
       <Box bg={"rgba(255, 255, 255, 0.7)"} w={"full"} h={"full"} pt={"120px"}>
-        {/* <center>
-          <a href="/">
-            <img src={logo} alt="Logo" width="300px" />
-          </a>
-        </center> */}
         <Box
           maxW={{ base: "90%", md: "80%", lg: "50%" }}
           m="auto"
@@ -80,9 +67,6 @@ const VerificationPage = () => {
               onClick={handleVerify}
               mb={6}
               width="80"
-              // textColor={"black"}
-              // variant={"outline"}
-              // borderColor={"black"}
             >
               Verify
             </Button>

@@ -19,6 +19,8 @@ import ProfileUpdateForm from './components/ProfileUpdateForm';
 import ProfilePage from './components/components_profilepage/ProfilePage';
 import BlogSection from './components/components_landingpage/BlogSection';
 import CategoryPage from './components/components_landingpage/sectionCategori';
+import EditMobilePhone from './components/components_profilepage/EditMobilePhone';
+
 
 
 export default function App() {
@@ -40,6 +42,7 @@ export default function App() {
         <Route path="/profilePage" element={<ProfilePage/>} />
         <Route path="/blogsection" element={<BlogSection/>} />
         <Route path="/categoryPage" element={<CategoryPage/>} />
+        <Route path="/editMobilePhone" element={<EditMobilePhone/>} />
       </Routes>
     </ChakraProvider>
   );

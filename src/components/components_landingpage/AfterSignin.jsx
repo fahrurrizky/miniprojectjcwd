@@ -1,5 +1,4 @@
-import React from "react";
-import { motion } from 'framer-motion';
+// import { motion } from 'framer-motion';
 import { Link } from "react-router-dom";
 import photo from "./pp.jpeg";
 import {
@@ -7,12 +6,8 @@ import {
   Flex,
   Avatar,
   Button,
-  HStack,
-  VStack,
   Stack,
-  Image,
   Input,
-  Spacer,
   Menu,
   MenuButton,
   MenuList,
@@ -28,7 +23,7 @@ import {
   // useColorModeValue,
 } from "@chakra-ui/react";
 import { CiEdit } from "react-icons/ci";
-import { IoNotificationsOutline, IoCreateOutline } from "react-icons/io5";
+import { IoNotificationsOutline } from "react-icons/io5";
 import { BsSearch } from "react-icons/bs";
 import { ChevronRightIcon } from "@chakra-ui/icons";
 import logo from "./Bee2.png";
@@ -39,21 +34,34 @@ import {
   ModalContent,
   ModalHeader,
   ModalBody,
-  ModalFooter,
   ModalCloseButton,
   useDisclosure,
 } from "@chakra-ui/react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import NotificationModal from "./NotificationModal"
+
+
 
 const Navbar = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const navigate = useNavigate();
+  const [isNotificationModalOpen, setIsNotificationModalOpen] = useState(false);
 
+  const openNotificationModal = () => {
+    setIsNotificationModalOpen(true);
+  };
+  
+  const closeNotificationModal = () => {
+    setIsNotificationModalOpen(false);
+  };
   
   const handleLogout = () => {
     localStorage.removeItem("token");
     window.location.reload();
     navigate("/");
   };
+
   return (
     <Box>
       <Flex
@@ -83,7 +91,7 @@ const Navbar = () => {
             </Button>
             <Modal isOpen={isOpen} onClose={onClose} size={'full'} blockScrollOnMount={false}>
               <ModalOverlay />
-              <ModalContent bg="rgba(0, 0, 0, 0.6)" opacity={0.8} py={'300px'}>
+              <ModalContent bg="rgba(0, 0, 0, 0.6)" opacity={0.8} py={'300px'} onClick={onClose}>
                 <ModalHeader textColor={'white'} px={'300px'}>Search</ModalHeader>
                 <ModalCloseButton color="white" size={'2xl'} mt={'372px'} mr={'250px'}/>
                 <ModalBody px={'300px'}>
@@ -95,14 +103,15 @@ const Navbar = () => {
                     textColor={'white'}
                   />
                 </ModalBody>
-                {/* <ModalFooter>
-                  <button onClick={onClose}>Close</button>
-                </ModalFooter> */}
               </ModalContent>
             </Modal>
             {/* Notifcation */}
-            <Button variant="" mr={3}>
-              <IoNotificationsOutline size={25} />
+            <Button variant="ghost" mr={3} >
+              <IoNotificationsOutline size={25}onClick={openNotificationModal} />
+              <NotificationModal
+                isOpen={isNotificationModalOpen}
+                onClose={closeNotificationModal}
+              />
             </Button>
             {/* Menu Profile */}
             <Menu isLazy>
@@ -115,32 +124,34 @@ const Navbar = () => {
                 borderColor={useColorModeValue("gray.700", "gray.100")}
                 boxShadow="4px 4px 0"
               >
-                <Link
-                  href="https://dev.to/m_ahmad"
-                  _hover={{ textDecoration: "none" }}
-                  isExternal
-                >
+                <Box>
                   <MenuItem>
                     <Link to="/profilePage" align="start">
-                      <Text fontWeight="300">Samudra Biru</Text>
+                      <Text fontWeight="300">Beeyond The Pages</Text>
                       <Text fontSize="sm" color="gray.500">
-                        @sam_
+                        @Bee_yondthepages
                       </Text>
                     </Link>
                   </MenuItem>
-                </Link>
+                </Box>
                 <MenuDivider />
+                {/* <MenuItem> */}
+                  <Text ml={3} as='u' fontWeight="400" fontSize={'lg'}>Setting</Text>
+                {/* </MenuItem> */}
                 <MenuItem>
-                  <Text fontWeight="300">Dashboard</Text>
+                <Link to="/forgotpasword">
+                  <Text fontWeight="300">Forgot Password</Text>
+                </Link>
                 </MenuItem>
                 <MenuItem>
-                  <Text fontWeight="300">Create Post</Text>
+                <Link to="/reset-password/:token">
+                  <Text fontWeight="300">Reset Password</Text>
+                </Link>
                 </MenuItem>
                 <MenuItem>
-                  <Text fontWeight="300">Reading List</Text>
-                </MenuItem>
-                <MenuItem>
-                  <Text fontWeight="300">Settings</Text>
+                <Link to="/change-password">
+                  <Text fontWeight="300">Change Password</Text>
+                </Link>
                 </MenuItem>
                 <MenuDivider />
                 <Link>
@@ -167,9 +178,61 @@ const Navbar = () => {
 export default Navbar;
 
 const DesktopNav = () => {
-  // const linkColor = useColorModeValue("gray.600", "gray.200");
-  // const linkHoverColor = useColorModeValue("yellow.400", "white");
-  // const popoverContentBgColor = useColorModeValue("white", "gray.800");
+  const [categories, setCategories] = useState([]);
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await axios.get(
+          "https://minpro-blog.purwadhikabootcamp.com/api/blog/allCategory"
+        );
+        setCategories(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchCategories();
+  }, []);
+
+
+  const NAV_ITEMS = [
+    {
+      label: "Category",
+      children: categories.map((category) => ({
+        label: category.name,
+        href: `/category/${category.map}`,
+      })),
+    },
+    {
+      label: "Find you want",
+      children: [
+        {
+          label: "Job Board",
+          subLabel: "Find your dream design job",
+          href: "#",
+        },
+        {
+          label: "Freelance Projects",
+          subLabel: "An exclusive list for contract work",
+          href: "#",
+        },
+      ],
+    },
+    {
+      label: "Our story",
+      href: "#",
+    },
+    {
+      label: "Membership",
+      href: "#",
+    },
+    {
+      label: "Write",
+      href: "/article",
+      icon: <CiEdit size={20} />,
+    },
+  ];
+  
 
   return (
     <Stack direction={"row"} spacing={3} textColor={"black"} >
@@ -180,44 +243,13 @@ const DesktopNav = () => {
         fontSize={"sm"}
         alignContent={"center"}
         textColor={"black"}
-        // gap={"3"}
-        // fontWeight={'medium'}
       >
-        {/* <Box>
-          <LinkChakra>
-            <Link>Category</Link>
-          </LinkChakra>
-        </Box>
-        <Box>
-          <LinkChakra>
-            <Link>Find you want</Link>
-          </LinkChakra>
-        </Box>
-        <Box>
-          <LinkChakra>
-            <Link>Our story</Link>
-          </LinkChakra>
-        </Box>
-        <Box>
-          <LinkChakra>
-            <Link>Membership</Link>
-          </LinkChakra>
-        </Box>
-        <Box>
-          <LinkChakra> 
-          <Flex>
-            <Link>Write</Link> <CiEdit size={'20'}/>
-          </Flex>
-          </LinkChakra>
-        </Box> */}
         <Popover trigger={"hover"} placement={"bottom-start"}>
         <PopoverTrigger>
               <Link
                 p={1}
                 to={navItem.href ?? "#"}
                 fontSize={"sm"}
-                // fontWeight={500}
-                // color={linkColor}
               >
                 <LinkChakra textColor={"black"} fontWeight={"medium"}>
                   <Flex>
@@ -232,7 +264,6 @@ const DesktopNav = () => {
               <PopoverContent
                 border={0}
                 boxShadow={"xl"}
-                // bg={popoverContentBgColor}
                 p={4}
                 rounded={"xl"}
                 minW={"sm"}
@@ -292,68 +323,4 @@ const DesktopSubNav = ({ label, href, subLabel }) => {
   );
 };
 
-const NAV_ITEMS = [
-  {
-    label: "Category",
-    children: [
-      {
-        label: "Explore Design Work",
-        // subLabel: "Trending Design to inspire you",
-        href: "#",
-      },
-      {
-        label: "New & Noteworthy",
-        // subLabel: "Up-and-coming Designers",
-        href: "#",
-      },
-      {
-        label: "New & Noteworthy",
-        // subLabel: "Up-and-coming Designers",
-        href: "#",
-      },
-      {
-        label: "New & Noteworthy",
-        // subLabel: "Up-and-coming Designers",
-        href: "#",
-      },
-      {
-        label: "New & Noteworthy",
-        // subLabel: "Up-and-coming Designers",
-        href: "#",
-      },
-      {
-        label: "New & Noteworthy",
-        // subLabel: "Up-and-coming Designers",
-        href: "#",
-      },
-    ],
-  },
-  {
-    label: "Find you want",
-    children: [
-      {
-        label: "Job Board",
-        subLabel: "Find your dream design job",
-        href: "#",
-      },
-      {
-        label: "Freelance Projects",
-        subLabel: "An exclusive list for contract work",
-        href: "#",
-      },
-    ],
-  },
-  {
-    label: "Our story",
-    href: "#",
-  },
-  {
-    label: "Membership",
-    href: "#",
-  },
-  {
-    label: "Write",
-    href: "/article",
-    icon: <CiEdit size={20} />,
-  },
-];
+

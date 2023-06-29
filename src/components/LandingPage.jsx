@@ -9,35 +9,29 @@ import {
   Button,
   Container,
   Heading,
-  Stack,
   Text,
   Image,
-  SimpleGrid,
   Grid,
   GridItem,
-  VStack,
   Divider,
   Tabs,
   TabList,
   TabPanels,
   TabPanel,
   Tab,
-  Link as LinkChakra,
+  // Link as LinkChakra,
 } from "@chakra-ui/react";
-import { ChevronRightIcon } from "@chakra-ui/icons";
 import CaptionCarousel from "./components_landingpage/CarouselBanner";
 import Footer from "./components_landingpage/Footer";
-import CategoryPage from "./components_landingpage/sectionCategori";
-import Cart from "./components_landingpage/BlogSection";
-// import AfterSignin from "./components_landingpage/AfterSignin";
-// import BeforeSignin from "./components_landingpage/BeforeSignin";
+import AllCategory from "./components_landingpage/BlogSection";
+import {Business, Economy, Thecnology, Sport, Culinary, International,Fiction} from "./components_landingpage/AllCategory";
+
+
 
 function LandingPage() {
-  // const [issign, setIssign] = useState(false);
 
   return (
     <Box overflowY={"scroll"}>
-      {/* <Box>{issign ? <AfterSignin /> : <BeforeSignin />}</Box> */}
       <Box bg="white" h="800px" bgPosition="center" bgRepeat="no-repeat">
         <Container maxW="container.xl" h="100%">
           <Flex px={"2"} py={"100"}>
@@ -402,12 +396,22 @@ function LandingPage() {
         </Grid>
       </Box>
 
+
+
       <Flex py={"10px"} px={"50px"}>
         {/* 10 blog */}
 
-        <Box mt={"30px"} mr={"50px"} minW={"900px"}>
+        <Box 
+        mt={"30px"} 
+        mr={"50px"} 
+        minW={"900px"}
+        maxW={"900px"} 
+        position="sticky"
+        height="100vh"
+        overflow="scroll"
+        >
           <Tabs variant="enclosed">
-            <TabList fontFamily={"initial"} borderColor={"balck"}>
+            <TabList fontFamily={"initial"} borderColor={"balck"}position="sticky" overflow="scroll">
               <Tab>All Category</Tab>
               <Tab>Business</Tab>
               <Tab>Economy</Tab>
@@ -420,38 +424,42 @@ function LandingPage() {
             </TabList>
             <TabPanels>
               <TabPanel>
-                <Cart />
+                <AllCategory />
               </TabPanel>
               <TabPanel>
-                <Cart />
+                <Business />
               </TabPanel>
               <TabPanel>
-                <Cart />
+                <Economy />
               </TabPanel>
               <TabPanel>
-                <Cart />
+                <Thecnology />
               </TabPanel>
               <TabPanel>
-                <Cart />
+                <Sport />
               </TabPanel>
               <TabPanel>
-                <Cart />
+                <Culinary />
               </TabPanel>
               <TabPanel>
-                <Cart />
+                <International />
               </TabPanel>
               <TabPanel>
-                <Cart />
+                <Fiction />
               </TabPanel>
               <TabPanel>
-                <Cart />
+                {/* <Cart /> */}
               </TabPanel>
             </TabPanels>
           </Tabs>
         </Box>
 
         {/* Sidebar */}
-        <Box p={4}>
+        <Box p={4} 
+        position="relative"
+        height="100vh"
+        overflow="scroll"
+        >
           <Heading size="xl" fontFamily={"serif"} mb={"3"}>
             Hot News
           </Heading>

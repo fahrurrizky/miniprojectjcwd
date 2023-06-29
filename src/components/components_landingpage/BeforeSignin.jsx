@@ -3,34 +3,29 @@ import {
   Box,
   Flex,
   Text,
-  // IconButton,
   Button,
   Stack,
   Icon,
-  // Link,
   Popover,
   PopoverTrigger,
   PopoverContent,
   useColorModeValue,
   Link as LinkChakra,
-  // useDisclosure,
 } from "@chakra-ui/react";
-// import { PiUserCirclePlusFill } from "react-icons/pi";
-// import { IoMdArrowDropdown } from "react-icons/io";
-
 import {
-  // HamburgerIcon,
-  // CloseIcon,
   ChevronRightIcon,
 } from "@chakra-ui/icons";
 import logo from "./Bee2.png";
 import { CiEdit } from "react-icons/ci";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 // import LoginForm from '../components_landingpage/LoginForm';
 // import RegistrationForm from '../components_landingpage/RegistrationForm';
 
 export default function WithSubnavigation() {
   // const { isOpen, onOpen, onClose } = useDisclosure();
   // const { onToggle } = useDisclosure();
+
   const login = localStorage.getItem("token");
 
   return (
@@ -84,10 +79,62 @@ export default function WithSubnavigation() {
   );
 }
 
-const DesktopNav = () => {
-  // const linkColor = useColorModeValue("gray.600", "gray.200");
-  // const linkHoverColor = useColorModeValue("yellow.400", "white");
-  // const popoverContentBgColor = useColorModeValue("white", "gray.800");
+
+  const DesktopNav = () => {
+    const [categories, setCategories] = useState([]);
+    useEffect(() => {
+      const fetchCategories = async () => {
+        try {
+          const response = await axios.get(
+            "https://minpro-blog.purwadhikabootcamp.com/api/blog/allCategory"
+          );
+          setCategories(response.data);
+        } catch (error) {
+          console.log(error);
+        }
+      };
+  
+      fetchCategories();
+    }, []);
+  
+  
+    const NAV_ITEMS = [
+      {
+        label: "Category",
+        children: categories.map((category) => ({
+          label: category.name,
+          href: `/category/${category.slug}`,
+        })),
+      },
+      {
+        label: "Find you want",
+        children: [
+          {
+            label: "Job Board",
+            subLabel: "Find your dream design job",
+            href: "#",
+          },
+          {
+            label: "Freelance Projects",
+            subLabel: "An exclusive list for contract work",
+            href: "#",
+          },
+        ],
+      },
+      {
+        label: "Our story",
+        href: "#",
+      },
+      {
+        label: "Membership",
+        href: "#",
+      },
+      {
+        label: "Write",
+        href: "/article",
+        icon: <CiEdit size={20} />,
+      },
+    ];
 
   return (
     <Stack direction={"row"} spacing={3} textColor={"black"}>
@@ -105,8 +152,6 @@ const DesktopNav = () => {
                 p={1}
                 to={navItem.href ?? "#"}
                 fontSize={"sm"}
-                // fontWeight={500}
-                // color={linkColor}
               >
                 <LinkChakra textColor={"black"} fontWeight={"medium"}>
                   <Flex>
@@ -163,7 +208,7 @@ const DesktopSubNav = ({ label, href, subLabel }) => {
           >
             {label}
           </Text>
-          {/* <Text fontSize={"sm"}>{subLabel}</Text> */}
+          <Text fontSize={"sm"}>{subLabel}</Text>
         </Box>
         <Flex
           transition={"all .3s ease"}
@@ -181,73 +226,4 @@ const DesktopSubNav = ({ label, href, subLabel }) => {
   );
 };
 
-const NAV_ITEMS = [
-  {
-    label: "Category",
-    children: [
-      {
-        label: "Busines",
-        // subLabel: "Up-and-coming Designers",
-        href: "#",
-      },
-      {
-        label: "Economy",
-        // subLabel: "Up-and-coming Designers",
-        href: "#",
-      },
-      {
-        label: "Thecnology",
-        // subLabel: "Up-and-coming Designers",
-        href: "#",
-      },
-      {
-        label: "Sport",
-        // subLabel: "Up-and-coming Designers",
-        href: "#",
-      },
-      {
-        label: "Culinary",
-        // subLabel: "Up-and-coming Designers",
-        href: "#",
-      },
-      {
-        label: "Internationl",
-        // subLabel: "Up-and-coming Designers",
-        href: "#",
-      },
-      {
-        label: "Fiction",
-        // subLabel: "Up-and-coming Designers",
-        href: "#",
-      }
-    ],
-  },
-  {
-    label: "Find you want",
-    children: [
-      {
-        label: "Job Board",
-        subLabel: "Find your dream design job",
-        href: "#",
-      },
-      {
-        label: "Freelance Projects",
-        subLabel: "An exclusive list for contract work",
-        href: "#",
-      },
-    ],
-  },
-  {
-    label: "Our story",
-    href: "#",
-  },
-  {
-    label: "Membership",
-    href: "#",
-  },
-  {
-    label: "Write",
-    href: "/article",
-    icon: <CiEdit size={20} />,
-  },
-];
+

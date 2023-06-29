@@ -18,12 +18,15 @@ import {
 } from "@chakra-ui/react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { ExternalLinkIcon } from "@chakra-ui/icons";
-import logo from "./components_landingpage/Bee1.png";
+import { useNavigate } from "react-router-dom";
+
 
 const PasswordChangeForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isPasswordChanged, setIsPasswordChanged] = useState(false);
   const toast = useToast();
+  const navigate = useNavigate();
+
 
   const validationSchema = Yup.object().shape({
     currentPassword: Yup.string().required("Current Password is required"),
@@ -68,6 +71,7 @@ const PasswordChangeForm = () => {
       try {
         const response = await axios(config);
         console.log(response.data);
+        navigate("/profilePage");
         setIsPasswordChanged(true);
         toast({
           title: "Password changed successfully!",

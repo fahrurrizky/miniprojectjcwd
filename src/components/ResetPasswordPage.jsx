@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { ExternalLinkIcon, ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
@@ -22,6 +23,8 @@ const ResetPasswordPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const url = window.location.href.split("/")
   const token = url[url.length - 1];
+  const navigate = useNavigate();
+
 
   const handleTogglePassword = () => {
     setShowPassword(!showPassword);
@@ -44,6 +47,7 @@ const ResetPasswordPage = () => {
       .then(function (response) {
         console.log(response.data);
         setSubmitting(false);
+        navigate("/login");
       })
       .catch(function (error) {
         console.log(error);
