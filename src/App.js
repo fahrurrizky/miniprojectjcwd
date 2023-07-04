@@ -20,6 +20,9 @@ import ProfilePage from './components/components_profilepage/ProfilePage';
 import BlogSection from './components/components_landingpage/BlogSection';
 import CategoryPage from './components/components_landingpage/sectionCategori';
 import EditMobilePhone from './components/components_profilepage/EditMobilePhone';
+import VerifChangeEmail from './components/components_profilepage/VerifEmail';
+
+
 
 
 
@@ -43,6 +46,7 @@ export default function App() {
         <Route path="/blogsection" element={<BlogSection/>} />
         <Route path="/categoryPage" element={<CategoryPage/>} />
         <Route path="/editMobilePhone" element={<EditMobilePhone/>} />
+        <Route path="/verification-change-email/:token" element={<VerifChangeEmail/>} />
       </Routes>
     </ChakraProvider>
   );
