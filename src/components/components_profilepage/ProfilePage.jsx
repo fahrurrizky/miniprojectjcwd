@@ -12,6 +12,8 @@ import {
   Card,
   CardBody,
   Image,
+  useToast,
+  Input,
 } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 import photo from "../components_landingpage/pp.jpeg";
@@ -34,6 +36,87 @@ import axios from "axios";
 
 export default function ProfilePage() {
 
+  const [userData, setUserData] = useState({ username: '', imgProfile: '' });
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [isProfilePictureModalOpen, setIsProfilePictureModalOpen] = useState(false);
+
+
+  const toast = useToast();
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        const res = await axios.get('https://minpro-blog.purwadhikabootcamp.com/api/auth', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        const { username, imgProfile } = res.data;
+        setUserData({ username, imgProfile });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchUserData();
+  }, []);
+
+  const handleAvatarUpload = (event) => {
+    const file = event.target.files[0];
+    setSelectedFile(file);
+  };
+
+  const openProfilePictureModal = () => {
+    setIsProfilePictureModalOpen(true);
+  };
+
+  const closeProfilePictureModal = () => {
+    setIsProfilePictureModalOpen(false);
+  };
+
+  const handleProfileUpdate = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      const formData = new FormData();
+      formData.append('file', selectedFile);
+
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      const response = await axios.post(
+        'https://minpro-blog.purwadhikabootcamp.com/api/profile/single-uploaded',
+        formData,
+        config
+      );
+      console.log(response.data);
+
+      toast({
+        title: 'Profile updated successfully! Please Refres the Browser',
+        status: 'success',
+        duration: 9000,
+        isClosable: true,
+      });
+      window.location.reload()
+
+
+      // Handle response
+    } catch (error) {
+      toast({
+        title: 'Something went wrong!',
+        status: 'error',
+        duration: 2000,
+        isClosable: true,
+      });
+      console.log(error);
+      // Error Handle
+    }
+  };
+  
   const [username, setUsername] = useState("");
   const [avatar, setAvatar] = useState("");
   const [email, setEmail] = useState("");
@@ -197,28 +280,20 @@ export default function ProfilePage() {
           <Card mb={4} boxShadow="none">
             <CardBody textAlign="center">
               <center>
-                <Image
-                  src={uploadedImage || (photo)}
-                  alt="avatar"
-                  borderRadius="full"
-                  boxSize="160px"
-                  mb={2}
-                />
+              <Image
+              src={`https://minpro-blog.purwadhikabootcamp.com/${userData.imgProfile}`}
+              alt={userData.username}
+              style={{ width: '260px', height: '260px', borderRadius: '50%' }}
+              onClick={openProfilePictureModal}
+            />
               </center>
-              <Button colorScheme="teal" mb={"2"} onClick={openPhotoModal}>
-                Change Photo Profile
-                <EditPhotoModal 
-                isOpen={isPhotoModalOpen}
-                onClose={closePhotoModal}
-                currentPhoto={currentPhoto}
-                onSave={handleSavePhoto}
-                onImageUpload={handleImageUpload}
-                />
-              </Button>
-              <Text color="gray.500" mb={1}>
-                Full Stack Developer
+              <Text fontWeight={"bold"} mt={'3'} mb={"2"}>
+                Change Photo Profile 
               </Text>
-              <Text color="gray.500">Timoho D.I.Y</Text>
+              <Input type="file" onChange={handleAvatarUpload} width={'37%'}  p={'4px 6px'} />
+          <Button ml={2} colorScheme="teal" size="sm" onClick={handleProfileUpdate}>
+            Upload
+          </Button>
             </CardBody>
           </Card>
         </Box>

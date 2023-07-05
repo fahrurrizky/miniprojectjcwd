@@ -17,24 +17,26 @@ import axios from 'axios';
 const EditPhotoModal = ({ isOpen, onClose, onSave, token }) => {
   const [profilePhoto, setProfilePhoto] = useState('');
 
-  const handleSave = () => {
+  const handleSave = async() => {
     const formData = new FormData();
     formData.append('file', profilePhoto);
-
-    axios
-      .post('https://minpro-blog.purwadhikabootcamp.com/api/profile/single-uploaded', formData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((response) => {
-        console.log(response.data.result);
-        onSave(profilePhoto);
-        onClose();
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    try {
+      const response = await axios.post(
+        'https://minpro-blog.purwadhikabootcamp.com/api/profile/single-uploaded',
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log(response.data.result);
+      onSave(profilePhoto);
+      alert("Change Profile Success");
+      onClose();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleFileChange = (e) => {
@@ -63,7 +65,7 @@ const EditPhotoModal = ({ isOpen, onClose, onSave, token }) => {
           <Button variant="ghost" mr={3} onClick={onClose}>
             Cancel
           </Button>
-          <Button colorScheme="teal" onClick={handleSave} disabled={!profilePhoto}>
+          <Button colorScheme="teal" onClick={handleSave} >
             Save
           </Button>
         </ModalFooter>

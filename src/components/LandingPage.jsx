@@ -25,6 +25,8 @@ import CaptionCarousel from "./components_landingpage/CarouselBanner";
 import Footer from "./components_landingpage/Footer";
 import AllCategory from "./components_landingpage/BlogSection";
 import {Business, Economy, Thecnology, Sport, Culinary, International,Fiction} from "./components_landingpage/AllCategory";
+import FavBlog from "./components_landingpage/FavBlog";
+import HotNews from "./components_landingpage/HotNews";
 
 
 
@@ -399,7 +401,6 @@ function LandingPage() {
 
 
       <Flex py={"10px"} px={"50px"}>
-        {/* 10 blog */}
 
         <Box 
         mt={"30px"} 
@@ -471,90 +472,12 @@ function LandingPage() {
               borderColor: "#000000",
             }}
           />
-          <Flex spacing={9} align="start" mt={"10"}>
-            <Box>
-              <Image
-                src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8ZWR1Y2F0aW9ufGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60"
-                alt="Dan Abramov"
-                minW="90px"
-                maxW="90px"
-                mr={"5"}
-              />
-            </Box>
-            <Link to="/category/technology">
-              <Heading size="sm" mb={"2"}>
-                If You Don’t Stand For Something You Will Fall For Anything
-              </Heading>
-              <Text fontSize={"sm"} as={"i"}>
-                March 6, 2019
-              </Text>
-            </Link>
-          </Flex>
-
-          <Flex spacing={9} align="start" mt={"10"}>
-            <Box>
-              <Image
-                src="https://images.unsplash.com/photo-1577896851231-70ef18881754?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mjl8fGVkdWNhdGlvbnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60"
-                alt="Dan Abramov"
-                minW="90px"
-                maxW="90px"
-                mr={"5"}
-              />
-            </Box>
-            <Link to="/category/technology">
-              <Heading size="sm" mb={"2"}>
-                Learning Never Exhausts The Mind.
-              </Heading>
-              <Text fontSize={"sm"} as={"i"}>
-                March 6, 2019
-              </Text>
-            </Link>
-          </Flex>
-
-          <Flex spacing={9} align="start" mt={"10"}>
-            <Box>
-              <Image
-                src="https://images.unsplash.com/photo-1601807576163-587225545555?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fGVkdWNhdGlvbnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60"
-                alt="Dan Abramov"
-                minW="90px"
-                maxW="90px"
-                mr={"5"}
-              />
-            </Box>
-            <Link to="/category/technology">
-              <Heading size="sm" mb={"2"}>
-                We Are All In The Gutter, But Some Of Us Are Looking At The
-                Stars
-              </Heading>
-              <Text fontSize={"sm"} as={"i"}>
-                March 6, 2019
-              </Text>
-            </Link>
-          </Flex>
-          <Flex spacing={9} align="start" mt={"10"}>
-            <Box>
-              <Image
-                src="https://images.unsplash.com/photo-1531482615713-2afd69097998?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80"
-                alt="Dan Abramov"
-                minW="90px"
-                maxW="90px"
-                mr={"5"}
-              />
-            </Box>
-            <Link to="/category/technology">
-              <Heading size="sm" mb={"2"}>
-                You Can’t Blame Gravity For Falling In Love.
-              </Heading>
-              <Text fontSize={"sm"} as={"i"}>
-                March 6, 2019
-              </Text>
-            </Link>
-          </Flex>
+          <HotNews />
 
           <Divider mt={6} mb={4} />
-
+          {/* TOP 10 FAVORITE BLOG */}
           <Heading size="xl" fontFamily={"serif"} mb={"3"}>
-            Popular News
+            '10' Favorite Blog
           </Heading>
           <hr
             width={"full"}
@@ -565,64 +488,9 @@ function LandingPage() {
             }}
           />
           <Box spacing={9} align="start" mt={"10"}>
-            <Box>
-              <Image
-                src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8ZWR1Y2F0aW9ufGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60"
-                alt="Dan Abramov"
-                minW="350px"
-                maxW="30px"
-                mr={"5"}
-              />
-            </Box>
-            <Link to="/category/technology">
-              <Heading size="sm" mt={"2"}>
-                If You Don’t Stand For Something You Will Fall For Anything
-              </Heading>
-              <Text fontSize={"sm"} as={"i"}>
-                March 6, 2019
-              </Text>
-            </Link>
+            <FavBlog />
           </Box>
 
-          <Box spacing={9} align="start" mt={"10"}>
-            <Box>
-              <Image
-                src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8ZWR1Y2F0aW9ufGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60"
-                alt="Dan Abramov"
-                minW="350px"
-                maxW="30px"
-                mr={"5"}
-              />
-            </Box>
-            <Link to="/category/technology">
-              <Heading size="sm" mt={"2"}>
-                If You Don’t Stand For Something You Will Fall For Anything
-              </Heading>
-              <Text fontSize={"sm"} as={"i"}>
-                March 6, 2019
-              </Text>
-            </Link>
-          </Box>
-
-          <Box spacing={9} align="start" mt={"10"}>
-            <Box>
-              <Image
-                src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8ZWR1Y2F0aW9ufGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60"
-                alt="Dan Abramov"
-                minW="350px"
-                maxW="30px"
-                mr={"5"}
-              />
-            </Box>
-            <Link to="/category/technology">
-              <Heading size="sm" mt={"2"}>
-                If You Don’t Stand For Something You Will Fall For Anything
-              </Heading>
-              <Text fontSize={"sm"} as={"i"}>
-                March 6, 2019
-              </Text>
-            </Link>
-          </Box>
         </Box>
       </Flex>
       <Footer />

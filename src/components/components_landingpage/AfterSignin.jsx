@@ -89,9 +89,9 @@ const Navbar = () => {
             <Button variant={"unstyled"} mr={"-2.5"}>
               <BsSearch onClick={onOpen} size={"22"} />
             </Button>
-            <Modal isOpen={isOpen} onClose={onClose} size={'full'} blockScrollOnMount={false}>
+            <Modal isOpen={isOpen} onClose={onClose} size={'full'} blockScrollOnMount={false} onClick={onClose}>
               <ModalOverlay />
-              <ModalContent bg="rgba(0, 0, 0, 0.6)" opacity={0.8} py={'300px'} onClick={onClose}>
+              <ModalContent bg="rgba(0, 0, 0, 0.6)" opacity={0.8} py={'300px'} >
                 <ModalHeader textColor={'white'} px={'300px'}>Search</ModalHeader>
                 <ModalCloseButton color="white" size={'2xl'} mt={'372px'} mr={'250px'}/>
                 <ModalBody px={'300px'}>
