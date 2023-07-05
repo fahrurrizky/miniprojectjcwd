@@ -61,17 +61,18 @@ export default function EditUserName({ isOpen, onClose }) {
       console.log("ini respon changeusername", respon);
       toast({
         title: "Username change",
-        description: "Please check your email to verification username change",
+        description: "Success change username",
         status: "success",
         duration: 3000,
         isClosable: true,
       });
+      window.location.reload()
       profilePage();
     } catch (error) {
       console.log(error);
       toast({
         title: "Error",
-        description: "your password is not change",
+        description: "your username is not change",
         status: "error",
         duration: 3000,
         isClosable: true,

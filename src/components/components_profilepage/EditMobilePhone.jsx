@@ -49,11 +49,12 @@ export default function EditMobilePhone({ isOpen, onClose }) {
       console.log("ini respon change phone", respon);
       toast({
         title: "Phone change",
-        description: "Please check your email to verification phone change",
+        description: "Success change phone",
         status: "success",
         duration: 3000,
         isClosable: true,
       });
+      window.location.reload()
       profilePage();
     } catch (error) {
       console.log(error);

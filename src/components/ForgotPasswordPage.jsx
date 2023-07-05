@@ -2,12 +2,13 @@ import { useState } from "react";
 import logo from "./Bee1.png";
 import { Link } from "react-router-dom";
 import { ExternalLinkIcon } from "@chakra-ui/icons";
-import { Box, FormControl, FormLabel, Input, Button, Heading, Text, Link as LinkChakra } from "@chakra-ui/react";
+import { Box, FormControl, useToast, FormLabel, Input, Button, Heading, Text, Link as LinkChakra } from "@chakra-ui/react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 
 const ForgotPassword = () => {
+  const toast = useToast();
   const initialValues = {
     email: ""
   };
@@ -23,6 +24,13 @@ const ForgotPassword = () => {
       })
       .then(function (response) {
         console.log(response.data);
+        toast({
+          title: "Email change",
+          description: "Please check your email for link verification",
+          status: "success",
+          duration: 3000,
+          isClosable: true,
+        });
       })
       .catch(function (error) {
         console.log(error);
